@@ -406,6 +406,13 @@ main(int argc, char *argv[])
 	if (tSev) {
 		next += snprintf(next, (end - next),
 			"%s severity>=%s", connector, tSev);
+		/* if next is already moved ahead of end,
+		 * Error out now.
+		 */
+		if (next > end) {
+			fprintf(stderr, "local buffer type_match overflowed\n");
+			exit(1);
+		}
 		connector = " and ";
 	}
 
